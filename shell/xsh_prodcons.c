@@ -1,5 +1,6 @@
 #include <xinu.h>
 #include <prodcons.h>
+#include <stdlib.h>
 
 int n = 0;
 int produced, consumed;
