@@ -4,3 +4,5 @@ extern int n; /* this is just declaration */
 /* Function Prototype */
 void consumer(int count);
 void producer(int count);
+
+sid32 consumed, produced;
