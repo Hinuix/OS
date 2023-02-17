@@ -3,9 +3,9 @@
 
 void consumer(int count){
 	for(int i = 0; i <= count; i++){
-	wait(produced);	
+		wait(produced);	
 		printf("consumed : %d\n", n);
-	signal(consumed);
+		signal(consumed);
 	}
-
+	signal(done);
 }
