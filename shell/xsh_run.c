@@ -12,14 +12,19 @@ void prodcons_bb(int nargs, char *args[])
 	producer_iteration = atoi(args[3]);
 	consumer_iteration = atoi(args[4]);
 
-	mutex = semcreate(1);
 
 	head = 0;
 	tail = 0;
 
 	producer_mutex = semcreate(0);
 	consumer_mutex = semcreate(5);
-
+	mutex = semcreate(1);
+	
+	if (nargs != 5)
+    {
+        printf("Syntax: run prodcons_bb <# producers> <# consumers> <# producer iterations> <# consumer iterations>\n");
+        return;
+    }
 	if (producer_count * producer_iteration != consumer_count * consumer_iteration)
 	{
 		printf("Iteration Mismatch Error: the number of producer(s) iteration does not match the consumer(s) iteration\n");

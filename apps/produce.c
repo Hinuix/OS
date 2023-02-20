@@ -21,6 +21,7 @@ void producer(int count)
 
 void producer_bb(int count)
 {
+  char *process_name = proctab[getpid()].prname;
   for (int i = 0; i < count; i++)
   {
     wait(consumer_mutex);
@@ -28,7 +29,7 @@ void producer_bb(int count)
 
     arr_q[head] = i;
     head = (head + 1) % 5;
-    printf("name : %s, write : %d\n", proctab[getpid()].prname, i);
+    printf("name : %s, write : %d\n", process_name, i);
 
     signal(mutex);
     signal(producer_mutex);
