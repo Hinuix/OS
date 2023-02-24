@@ -2,36 +2,33 @@
 #include <prodcons.h>
 #include <prodcons_bb.h>
 
-
-int arr_q[5];
-int head, tail;
-sid32 mutex, producer_mutex, consumer_mutex;
-
-
 void producer(int count)
 {
     for (int i = 0; i <= count; i++)
     {
         wait(consumed);
-        n = i;
-        printf("produced : %d\n", n);
+        printf("produced : %d\n", i);
         signal(produced);
     }
 }
 
-void producer_bb(int count)
+void producer_bb(int id, int count)
 {
-  char *process_name = proctab[getpid()].prname;
-  for (int i = 0; i < count; i++)
+  for(int i = 0; i < count; i++)
   {
-    wait(consumer_mutex);
+    wait(consumed);
     wait(mutex);
 
     arr_q[head] = i;
+    printf("name : producer_%d, write : %d\n", id, i);
     head = (head + 1) % 5;
-    printf("name : %s, write : %d\n", process_name, i);
+
+  if(head == 5){
+    head = 0;
+    }
 
     signal(mutex);
-    signal(producer_mutex);
+    signal(produced);
   }
+  return OK;
 }

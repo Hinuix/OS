@@ -1,12 +1,11 @@
-extern int arr_q[5];
+extern int32 arr_q[5];
 
-extern sid32 mutex;
-extern sid32 producer_mutex;
-extern sid32 consumer_mutex;
+sid32 produced;
+sid32 consumed;
+sid32 mutex;
 
-extern int head;
-extern int tail;
+extern int32 head;
+extern int32 tail;
 
-void consumer_bb(int count);
-void producer_bb(int count);
-void prodcons_bb(int nargs, char *args[]);
+void consumer_bb(int id, int count);
+void producer_bb(int id, int count);

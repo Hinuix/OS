@@ -1,9 +1,11 @@
 #include <xinu.h>
 #include <prodcons.h>
+#include <prodcons_bb.h>
+
 
 int arr_q[5];
 int head, tail;
-sid32 mutex, producer_mutex, consumer_mutex;
+sid32 mutex;
 
 
 void consumer(int count){
@@ -14,19 +16,22 @@ void consumer(int count){
 	}
 }
 
-void consumer_bb(int count)
+void consumer_bb(int id, int count)
 {
-	char *process_name = proctab[getpid()].prname;
-	for (int i = 0; i < count; i++)
+	int i, temp;
+	for (i = 0; i < count; i++)
 	{
-		wait(producer_mutex);
+		wait(produced);
 		wait(mutex);
-
-		int temp = arr_q[tail];
+		temp = arr_q[tail];
+		printf("name : consumer_%d, read : %d\n", id, temp);
 		tail = (tail + 1) % 5;
-		printf("name : %s, read : %d\n", process_name, temp);
-
 		signal(mutex);
-		signal(consumer_mutex);
+		signal(consumed);
+
+		if(tail == 5){
+			tail = 0;
+			}
 	}
+	return OK;
 }
