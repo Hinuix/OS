@@ -1,34 +1,25 @@
 #include <xinu.h>
 #include <prodcons.h>
-#include <prodcons_bb.h>
+#include <stdio.h>
 
-void producer(int count)
-{
-    for (int i = 0; i <= count; i++)
-    {
-        wait(consumed);
-        printf("produced : %d\n", i);
-        signal(produced);
-    }
+void producer(int count, sid32 prod_sem, sid32 cons_sem) {
+  for(int i = 0; i <= count; i++) {
+    wait(prod_sem);
+    n = i;
+    printf("produced : %d\n", n);
+    signal(cons_sem);
+  }
 }
 
-void producer_bb(int id, int count)
-{
-  for(int i = 0; i < count; i++)
-  {
-    wait(consumed);
-    wait(mutex);
-
-    arr_q[head] = i;
-    printf("name : producer_%d, write : %d\n", id, i);
-    head = (head + 1) % 5;
-
-  if(head == 5){
-    head = 0;
-    }
-
-    signal(mutex);
-    signal(produced);
+void producer_bb(int idx, int count, sid32 prod_sem, sid32 cons_sem) {
+  for(int i = 0; i < count; i++) {
+    wait(prod_sem);
+    wait(mutex_bb);
+    n = i;
+    arr_q[arr_head] = n;
+    arr_head = (arr_head + 1) % 5;
+    printf("name : producer_%d, write : %d\n", idx, n);
+    signal(mutex_bb);
+    signal(cons_sem);
   }
-  return OK;
 }
