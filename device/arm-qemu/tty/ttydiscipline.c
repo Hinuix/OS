@@ -15,32 +15,9 @@ local void clearline(struct ttycblk* typtr, struct uart_csreg* csrptr);
  * 
  * Returns - Whether to print character (SKIP or DO_PRINT)
  */
-int ttydiscipline(char ch,
-		  struct ttycblk *typtr,
-		  struct uart_csreg* csrptr) {
 
-  if (ch == TY_NEWLINE || ch == TY_RETURN) {
-    /* 
-     * Copy the contents of the 'tyibuff' buffer from the 'tyihead' through 'tyitail'
-     *     into the 'typrev' buffer.
-     */
-  }
-
-  /*
-   * Check if the up key was pressed:
-   * Use 'tycommand' to indicate if a command is in progress and the previous character
-   *     If the characters appear in the sequence TY_ESC, then TY_BRACE, then TY_A
-   *     the up key was sent
-   */
-  // If the up key is detected (as above)
-      /*
-       * Clear the current input with the 'clearline' function and copy the contents of 
-       *     'typrev' buffer into the 'tyibuff' buffer
-       *     remember to reset the 'tyicursor' as well
-       *  Call 'echo' on each character to display it to the screen
-       */
-  return DO_PRINT;
-}
+//////////TO-DO
+//////////TO-DO
 
 local void echo(char ch, struct ttycblk* typtr, struct uart_csreg* csrptr) {
   *typtr->tyetail++ = ch;
