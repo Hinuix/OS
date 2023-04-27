@@ -4,11 +4,14 @@
 #include <prodcons.h>
 #include <string.h>
 #include <heap.h>
+#include <future_fib.h>
+#include <fstest.h>
 
 int arr_q[5];
 int arr_head = 0;
 int arr_tail = 0;
 sid32 mutex_bb;
+
 
 void prodcons_bb(int nargs, char *args[]) {
 
@@ -44,6 +47,7 @@ shellcmd xsh_run(int nargs, char *args[]) {
 		printf("prodcons_bb\n");
 		printf("futest\n");
 		printf("memtest\n");
+		printf("fstest\n");
 		return OK;
 	}
 
@@ -65,6 +69,17 @@ shellcmd xsh_run(int nargs, char *args[]) {
 	else if (strncmp(args[0], "memtest", 7) == 0){
 		resume(create((void *)xsh_memtest, 4096, 20, "memtest", 2, nargs, args));
 	}
+	else if (strncmp(args[0], "fstest", 9) == 0){
+		resume(create((void *)xsh_fstest, 4096, 20, "fstest", 2, nargs, args));
+	}
+	/*else if (strncmp(args[1], "--free", 6) == 0)
+    {
+      resume(create((void *)future_free_test, 4096, 20, "future_free_test", 2, nargs, args));
+    }
+    else if (strncmp(args[1], "-f", 2) == 0)
+    {
+      resume(create((void *)future_fib, 4096, 20, "future_fib", 2, nargs, args));
+    }*/
 	else{
 		printf("hello\n");
 		printf("list\n");
@@ -72,6 +87,7 @@ shellcmd xsh_run(int nargs, char *args[]) {
 		printf("prodcons_bb\n");
 		printf("futest\n");
 		printf("memtest\n");
+		printf("fstest\n");
 		return OK;
 	}
 	return 0;
