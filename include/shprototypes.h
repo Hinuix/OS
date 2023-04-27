@@ -89,8 +89,7 @@ extern  shellcmd xsh_prodcons	(int32, char *[]);
 extern  shellcmd xsh_run        (int32, char *[]);
 
 /* in file xsh_futest.c */
-extern shellcmd xsh_futest       (int32, char *[], sid32);
+//extern shellcmd xsh_futest       (int32, char *[], sid32);
 
 /* in file xsh_memtest.c */
 extern shellcmd xsh_memtest       (int32, char *[], sid32);
-
