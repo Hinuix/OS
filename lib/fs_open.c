@@ -14,9 +14,9 @@ extern filetable_t oft[NUM_FD];
 
 int fs_open(char* filename, int flags) {
   int root_idx = file_exists(filename);
-  /*if (file_open(filename) || (root_idx == -1)) {
+  if (file_open(filename) || (root_idx == -1)) {
     return SYSERR;
-  }*/
+  }
   int i = 0;
   while (i < NUM_FD) {
     if (oft[i].state == FSTATE_CLOSED) {

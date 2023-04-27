@@ -13,9 +13,9 @@ extern fsystem_t* fsd;
  *        4. Write the inode and free bitmask back to the block device
  */
 syscall fs_create(char* filename) {
-  /*if (file_exists(filename) != -1 || fsd->root_dir.numentries >= DIR_SIZE) {
+  if (file_exists(filename) != -1 || fsd->root_dir.numentries >= DIR_SIZE) {
     return SYSERR;
-  }*/
+  }
 
   int i = 2;
   while (i < DIR_SIZE) {
