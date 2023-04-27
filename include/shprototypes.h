@@ -91,5 +91,5 @@ extern shellcmd xsh_futest       (int32, char *[], sid32);
 /* in file xsh_memtest.c */
 extern shellcmd xsh_memtest       (int32, char *[], sid32);
 
-/* in file xsh_memtest.c */
+/* in file xsh_fstest.c */
 extern shellcmd xsh_fstest       (int32, char *[], sid32);
