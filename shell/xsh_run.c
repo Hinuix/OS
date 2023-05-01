@@ -6,12 +6,13 @@
 #include <heap.h>
 #include <future_fib.h>
 #include <fstest.h>
+#include <future.h>
+
 
 int arr_q[5];
 int arr_head = 0;
 int arr_tail = 0;
 sid32 mutex_bb;
-
 
 void prodcons_bb(int nargs, char *args[]) {
 
@@ -35,6 +36,14 @@ void prodcons_bb(int nargs, char *args[]) {
   for (int j = 0; j < cons_m; j++) {
     resume(create(consumer_bb, 1024, 20, "consumer_bb", 4, j, cons_j, prod_sem, cons_sem));
   }
+  else if(strncmp(args[1], "fstest", 6) == 0) {
+	resume (create(xsh_fstest, 1024, 20 , "fstest", 2, nargs - 1, &(args[1])));
+  wait(sem_run);
+}else if((strncmp(args[1], "futest", 6) == 0) && strncmp(args[2], "--free", 6) == 0){
+  resume (create(future_free_test, 1024, 20 , "future_free_test", 2, nargs - 1, &(args[1])));
+}else if((strncmp(args[1], "futest", 6) == 0) && strncmp(args[2], "-f", 2) == 0){
+  resume (create(future_fib, 1024, 20 , "future_fib", 2, nargs - 1, &(args[1])));
+}
 
   return 0;
 }
@@ -72,14 +81,17 @@ shellcmd xsh_run(int nargs, char *args[]) {
 	else if (strncmp(args[0], "fstest", 9) == 0){
 		resume(create((void *)xsh_fstest, 4096, 20, "fstest", 2, nargs, args));
 	}
-	/*else if (strncmp(args[1], "--free", 6) == 0)
-    {
-      resume(create((void *)future_free_test, 4096, 20, "future_free_test", 2, nargs, args));
-    }
-    else if (strncmp(args[1], "-f", 2) == 0)
-    {
-      resume(create((void *)future_fib, 4096, 20, "future_fib", 2, nargs, args));
-    }*/
+	else if (strncmp(args[0], "futest", 10) == 0){
+    		if (strncmp(args[1], "--free", 6) == 0){
+      	resume(create((void *)future_free_test, 4096, 20, "future_free_test", 2, nargs, args));
+    	}
+    		if (strncmp(args[1], "-f", 2) == 0){
+      	resume(create((void *)future_fib, 4096, 20, "future_fib", 2, nargs, args));
+    	}
+    	else{
+      	printf("Syntax: run futest [-pc [g ...] [s VALUE ...]] | [-pcq LENGTH [g ...] [s VALUE ...]] | [-f NUMBER] | [--free]");
+    	}
+ 	}
 	else{
 		printf("hello\n");
 		printf("list\n");

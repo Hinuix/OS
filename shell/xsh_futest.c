@@ -25,9 +25,9 @@ syscall xsh_futest(int nargs, char *args[]){
 		} 
 		else if (num != 0 || strcmp(args[i], "0") == 0){
 			settersCounter++;
-		} 
+		}
 		else{
-			printf("Syntax: run futest [g ...] [VALUE ...]\n");
+			printf("Syntax: run futest [-fcq] [-f VALUE] || [--free] || [g | VALUE]+ || [VALUE | g]+ ...\n");
 			return SYSERR;
 		}
 		i++;
